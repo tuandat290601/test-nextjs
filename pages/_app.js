@@ -11,11 +11,16 @@ import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient());
-  const router = useRouter();
+
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <Devtools />
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
 
